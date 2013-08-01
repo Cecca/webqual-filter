@@ -5,17 +5,19 @@ module Filter (
     ) where
 
 import Data.BloomFilter
-{-import Data.BloomFilter.Easy-}
 import qualified Data.ByteString.Lazy as BS
 import qualified Data.ByteString.Lazy.Char8 as BSC
-{-import Converter-}
 import Data.Bits
 
 filterUrls :: Bloom BSC.ByteString -- ^ The bloom filter containing invalid urls
            -> BSC.ByteString  -- ^ The input bytestring, to be split in lines
            -> BSC.ByteString
 filterUrls bloomFilter = BSC.unlines . checkUrls . BSC.lines
-    where checkUrls = filter (`elemB` bloomFilter)
+    where checkUrls = filter (\l -> getUrl l `elemB` bloomFilter)
+          getUrl line = case BSC.split ' ' line of
+                              [url] -> url
+                              [id,url] -> url
+                              _ -> error "Zero or more than two chunks"
 
 -- | Links are expected to be encoded as 64 bit ID adjacency lists
 filterLinks :: Bloom BS.ByteString -- ^ The bloom filter containing invalid urls
