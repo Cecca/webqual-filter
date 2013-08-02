@@ -27,13 +27,14 @@ main = do
 
 
 filterUrlsFile :: Bloom BS.ByteString -> FilePath -> FilePath -> IO ()
-filterUrlsFile bloom input output = do
+filterUrlsFile bloom input output =
     BSCL.readFile input >>= return . filterUrls bloom >>= BSCL.writeFile output
 
 
 
 filterLinksFile :: Bloom BS.ByteString -> FilePath -> FilePath -> IO ()
-filterLinksFile = undefined
+filterLinksFile bloom input output = 
+    BSL.readFile input >>= return . filterLinks bloom >>= BSL.writeFile output
 
 
 createFilter :: Int -- ^ Expected size
