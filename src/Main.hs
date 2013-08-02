@@ -32,5 +32,8 @@ help :: String
 help = "webqual-filter: removes graph nodes that correspond to web pages\n" ++
        "that gave an error response code.\n\n" ++ 
        "USAGE:\n" ++
-       "    webqual-filter filterFile numElements"
+       "    webqual-filter filterFile numElements fileType input output\n" ++
+       "where filetype is one of the following:\n" ++
+       "    links\n" ++
+       "    urls\n"
 
