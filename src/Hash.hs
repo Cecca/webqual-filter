@@ -21,14 +21,14 @@ md5l = hashlazy
 truncate64 :: BS.ByteString -> BS.ByteString
 truncate64 = clearMSB . BS.take 8
 
-truncate64l :: BSL.ByteString -> BSL.ByteString
-truncate64l = BSL.fromStrict . truncate64 . BSL.toStrict
+truncate64l :: BSL.ByteString -> BS.ByteString
+truncate64l = truncate64 . BSL.toStrict
 
 hash64 :: BS.ByteString -> BS.ByteString
 hash64 = clearMSB . BS.take 8 . digestToByteString . md5
 
-hash64l :: BSL.ByteString -> BSL.ByteString
-hash64l = BSL.fromStrict . hash64 . BSL.toStrict
+hash64l :: BSL.ByteString -> BS.ByteString
+hash64l = hash64 . BSL.toStrict
 
 clearMSB :: BS.ByteString -> BS.ByteString
 {-# INLINE clearMSB #-}
